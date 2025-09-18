@@ -40,10 +40,6 @@ export class AuthService {
         isActive: true,
       });
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      delete user.password;
-
       return {
         email: user.dataValues.email,
         token: this.getJwtToken({ id: user.id }),

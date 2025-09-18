@@ -16,6 +16,7 @@ export class AdminCreateUserDto {
   @ApiProperty({ default: 'example1@domain.com' })
   @IsString()
   @IsEmail()
+  @MaxLength(50)
   email: string;
 
   @ApiProperty({ default: 'Abcd1234*' })
@@ -31,6 +32,7 @@ export class AdminCreateUserDto {
   @ApiProperty({ default: 'name' })
   @IsString()
   @MinLength(1)
+  @MaxLength(50)
   name: string;
 
   @IsBoolean()

@@ -7,9 +7,10 @@ import {
   Delete,
   ParseIntPipe,
   Query,
+  Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AdminUpdateUserDto } from './dto';
+import { AdminCreateUserDto, AdminUpdateUserDto } from './dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../decorators';
 import { PaginationDto } from '../../common/dto/pagination.dto';
@@ -19,10 +20,11 @@ import { PaginationDto } from '../../common/dto/pagination.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // @Post()
-  // create(@Body() createUserDto: AdminCreateUserDto) {
-  //   return this.usersService.create(createUserDto);
-  // }
+  @Post()
+  @Auth()
+  create(@Body() createUserDto: AdminCreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
 
   @Get()
   @Auth()

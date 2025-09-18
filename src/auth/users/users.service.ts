@@ -7,6 +7,7 @@ import { AdminCreateUserDto, AdminUpdateUserDto } from './dto';
 import { User } from './entities';
 import { InjectModel } from '@nestjs/sequelize';
 import { PaginationDto } from '../../common/dto/pagination.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -15,9 +16,21 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  create(_createUserDto: AdminCreateUserDto) {
-    throw new NotFoundException('route no implemented');
+  async create(createUserDto: AdminCreateUserDto) {
+    const { password, ...userData } = createUserDto;
+
+    await this.checkEmailExists(userData.email);
+
+    const user = await this.userModel.create({
+      ...userData,
+      password: bcrypt.hashSync(password, 10),
+      isActive: true,
+    });
+
+    return {
+      id: user.dataValues.id as number,
+      email: user.dataValues.email,
+    };
   }
 
   async checkEmailExists(email: string) {
