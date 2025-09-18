@@ -2,7 +2,7 @@ KS2 BACKEND
 
 ## Description
 
-...
+ks2 - user management and property sales api
 
 ## Project setup
 
